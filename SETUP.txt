@@ -1,0 +1,104 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  MANGA PDF PIPELINE  //  v1.0
+  Setup & Usage Guide
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+REQUIREMENTS
+─────────────────────────────────────────────────────────────
+
+Python 3.8+  (3.10+ recommended)
+
+Install all dependencies in one command:
+
+    pip install customtkinter img2pdf pypdf
+
+Or use the requirements.txt:
+
+    pip install -r requirements.txt
+
+
+QUICK START
+─────────────────────────────────────────────────────────────
+
+    python manga_pipeline.py
+
+
+HOW TO USE — FULL PIPELINE (Overview Tab)
+─────────────────────────────────────────────────────────────
+
+  IMAGE SOURCE   →  Root folder that contains chapter subfolders
+                    e.g.  D:\JJK PNG\
+                    └── CHAPTER 031\  (contains .png files)
+                    └── CHAPTER 032\
+                    └── ...
+
+  INTERMEDIATE   →  Where flat PDFs land AND where batch folders
+                    will be created.
+                    e.g.  D:\JJK PROJECT\
+
+  FINAL OUTPUT   →  Where merged PDFs are saved.
+                    Can be the same as INTERMEDIATE.
+                    e.g.  D:\PDF\
+
+  CHAPTER PARAMS →  Batch Size   : how many chapters per folder
+                    Start/End    : chapter range to process
+                    Skip From/To : range already done (skip convert)
+
+  IMAGE EXTS     →  Toggle .png .jpg .jpeg .webp
+                    Add custom extensions in the text field.
+
+  Click "▶ RUN FULL PIPELINE"  — all three stages run in order.
+
+
+INDIVIDUAL STAGE TABS
+─────────────────────────────────────────────────────────────
+
+  Use the sidebar to jump directly to Stage 1, 2, or 3.
+  Each has its own independent directory selectors and params.
+  Useful when only one step needs to be re-run.
+
+
+PIPELINE DATA FLOW
+─────────────────────────────────────────────────────────────
+
+  [Stage 1] IMAGE SOURCE  ──→  INTERMEDIATE  (flat PDFs)
+                ↓
+  [Stage 2] INTERMEDIATE  ──→  INTERMEDIATE  (batch subfolders created)
+                ↓
+  [Stage 3] INTERMEDIATE  ──→  FINAL OUTPUT  (merged PDFs)
+
+
+OUTPUT STRUCTURE EXAMPLE (Batch Size = 8, Start = 11, End = 270)
+─────────────────────────────────────────────────────────────
+
+  After Stage 1:
+    INTERMEDIATE\
+      CHAPTER 031.PDF
+      CHAPTER 032.PDF
+      ...
+
+  After Stage 2:
+    INTERMEDIATE\
+      CHAPTER 011 - CHAPTER 018\
+        CHAPTER 011.PDF  ...
+      CHAPTER 019 - CHAPTER 026\
+        ...
+
+  After Stage 3:
+    FINAL OUTPUT\
+      CHAPTER 011 - CHAPTER 018.PDF  (merged, lossless)
+      CHAPTER 019 - CHAPTER 026.PDF
+      ...
+
+
+NOTES
+─────────────────────────────────────────────────────────────
+
+  · All merges are LOSSLESS — no re-encoding, zero quality loss.
+  · Already-converted chapters are auto-skipped (idempotent runs).
+  · The GUI is fully non-blocking — progress streams in real-time.
+  · The pipeline works for ANY manga/comic project, not just JJK.
+  · Folder names must contain the word "CHAPTER" followed by a number.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
